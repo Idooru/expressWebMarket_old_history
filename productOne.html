@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>productOne</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <h1>productOne</h1>
+        <br />
+        <h4 id="idForm"></h4>
+        <h4 id="nameForm"></h4>
+        <h4 id="priceForm"></h4>
+        <h4 id="sellerForm"></h4>
+        <script>
+            (async () => {
+                try {
+                    const getAxios = await axios.get(
+                        "https://b2ef45f8-e166-41d7-bd35-9ad159028fbf.mock.pstmn.io/test"
+                    );
+                    const id = JSON.stringify(getAxios.data.products[0].id);
+                    const name = JSON.stringify(getAxios.data.products[0].name);
+                    const price = JSON.stringify(
+                        getAxios.data.products[0].price
+                    );
+                    const seller = JSON.stringify(
+                        getAxios.data.products[0].seller
+                    );
+                    document.querySelector("#idForm").innerHTML = "id:" + id;
+                    document.querySelector("#nameForm").innerHTML =
+                        "name:" + name;
+                    document.querySelector("#priceForm").innerHTML =
+                        "price:" + price;
+                    document.querySelector("#sellerForm").innerHTML =
+                        "seller:" + seller;
+                } catch (err) {
+                    console.error(err);
+                }
+            })();
+        </script>
+    </body>
+</html>

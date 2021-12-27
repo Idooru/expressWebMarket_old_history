@@ -1,0 +1,11 @@
+{
+    "name": "small_project",
+    "version": "1.0.0",
+    "description": "",
+    "main": "expressAPI.js",
+    "scripts": {
+        "start": "nodemon expressAPI"
+    },
+    "author": "",
+    "license": "ISC"
+}
