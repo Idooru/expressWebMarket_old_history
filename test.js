@@ -1,3 +1,22 @@
+const express = require("express");
+const app = express();
+
+app.set("port", process.env.PORT || 8080);
+
+function func(a) {
+    console.log(a);
+    return a + 1;
+}
+
+app.set("func2", func());
+
+app.get("/", (req, res) => {
+    res.send("test");
+    console.log(app.get("port"));
+    console.log(app.get("func2"));
+});
+
+app.listen(8080);
 // const axios = require("axios");
 // const express = require("express");
 // const path = require("path");
@@ -19,18 +38,14 @@
 //     }
 // }
 
+// app.set("func", getInfoWithAxios());
+
 // app.get("/", (req, res) => {
 //     res.sendFile(path.join(__dirname, "./expressAPI.html"));
 // });
 
 // app.use("/product/:addr", (req, res, next) => {
-//     console.log(
-//         `you connect on ${
-//             req.params.addr
-//         } when the current time is ${Date.now()}`
-//     );
-//     console.log("Request Type:", req.method);
-
+//     console.log(`you connect on ${req.params.addr}}`);
 //     next();
 // });
 
@@ -43,8 +58,8 @@
 //     try {
 //         const result = await axios.get("http://127.0.0.1:3257");
 //         const productID = String(result.data[0].id);
-
-//         getInfoWithAxios(productID);
+//         req.app.get("func");
+//         console.log("Request Type:", req.method);
 //     } catch (err) {
 //         console.error(err);
 //     }
@@ -64,6 +79,7 @@
 //                 res.sendFile(path.join(__dirname, "./productThree.html"));
 //             }
 //         })(productID);
+//         console.log("Request Type:", req.method);
 //     } catch (err) {
 //         console.error(err);
 //     }
@@ -83,6 +99,7 @@
 //                 res.sendFile(path.join(__dirname, "./productThree.html"));
 //             }
 //         })(productID);
+//         console.log("Request Type:", req.method);
 //     } catch (err) {
 //         console.error(err);
 //     }

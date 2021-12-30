@@ -9,8 +9,6 @@ require("./productServer1");
 
 app.use(morgan("dev"));
 
-app.set((req, res) => {});
-
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "./expressAPI.html"));
 });
@@ -22,7 +20,7 @@ app.use("/product/:addr", (req, res, next) => {
 
 app.get("/product", (req, res) => {
     res.write("<h1>Here is product information</h1>");
-    res.cookie();
+    res.send();
 });
 
 app.get("/product/product1", async (req, res) => {
