@@ -9,6 +9,18 @@ require("./productServer1");
 
 app.use(morgan("dev"));
 
+function getInfoWithAxios(key, res) {
+    if (key === "1") {
+        res.sendFile(path.join(__dirname, "./productOne.html"));
+    } else if (key === "2") {
+        res.sendFile(path.join(__dirname, "./productTwo.html"));
+    } else if (key === "3") {
+        res.sendFile(path.join(__dirname, "./productThree.html"));
+    } else if (key === undefined) {
+        res.send("<h1>No data for url</h1>");
+    }
+}
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "./expressAPI.html"));
 });
@@ -28,15 +40,7 @@ app.get("/product/product1", async (req, res) => {
         const result = await axios.get("http://127.0.0.1:3257");
         const productID = String(result.data[0].id);
 
-        (function getInfoWithAxios(key) {
-            if (key === "1") {
-                res.sendFile(path.join(__dirname, "./productOne.html"));
-            } else if (key === "2") {
-                res.sendFile(path.join(__dirname, "./productTwo.html"));
-            } else {
-                res.sendFile(path.join(__dirname, "./productThree.html"));
-            }
-        })(productID);
+        getInfoWithAxios(productID, res);
         console.log("Request Type:", req.method);
     } catch (err) {
         console.error(err);
@@ -48,15 +52,7 @@ app.get("/product/product2", async (req, res) => {
         const result = await axios.get("http://127.0.0.1:3257");
         const productID = String(result.data[1].id);
 
-        (function getInfoWithAxios(key) {
-            if (key === "1") {
-                res.sendFile(path.join(__dirname, "./productOne.html"));
-            } else if (key === "2") {
-                res.sendFile(path.join(__dirname, "./productTwo.html"));
-            } else {
-                res.sendFile(path.join(__dirname, "./productThree.html"));
-            }
-        })(productID);
+        getInfoWithAxios(productID, res);
         console.log("Request Type:", req.method);
     } catch (err) {
         console.error(err);
@@ -68,15 +64,7 @@ app.get("/product/product3", async (req, res) => {
         const result = await axios.get("http://127.0.0.1:3257");
         const productID = String(result.data[2].id);
 
-        (function getInfoWithAxios(key) {
-            if (key === "1") {
-                res.sendFile(path.join(__dirname, "./productOne.html"));
-            } else if (key === "2") {
-                res.sendFile(path.join(__dirname, "./productTwo.html"));
-            } else {
-                res.sendFile(path.join(__dirname, "./productThree.html"));
-            }
-        })(productID);
+        getInfoWithAxios(productID, res);
         console.log("Request Type:", req.method);
     } catch (err) {
         console.error(err);
@@ -84,6 +72,9 @@ app.get("/product/product3", async (req, res) => {
 });
 
 app.use((err, req, res, next) => {
+    if (err.message === "No data for url") {
+        res.status(404).send(err.message);
+    }
     console.error(err);
     res.status(401).send(err.message);
 });
