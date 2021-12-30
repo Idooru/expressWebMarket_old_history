@@ -9,7 +9,7 @@ require("./productServer1");
 
 app.use(morgan("dev"));
 
-function getInfoWithAxios(key, res) {
+const getInfoWithAxios = (key, res) => {
     if (key === "1") {
         res.sendFile(path.join(__dirname, "./productOne.html"));
     } else if (key === "2") {
@@ -19,14 +19,14 @@ function getInfoWithAxios(key, res) {
     } else if (key === undefined) {
         res.send("<h1>No data for url</h1>");
     }
-}
+};
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "./expressAPI.html"));
 });
 
 app.use("/product/:addr", (req, res, next) => {
-    console.log(`you connect on ${req.params.addr}}`);
+    console.log(`you connect on /product/${req.params.addr}`);
     next();
 });
 
