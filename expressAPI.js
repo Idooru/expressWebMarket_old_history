@@ -16,8 +16,6 @@ const getInfoWithAxios = (key, res) => {
         res.sendFile(path.join(__dirname, "./productTwo.html"));
     } else if (key === "3") {
         res.sendFile(path.join(__dirname, "./productThree.html"));
-    } else if (key === undefined) {
-        res.send("<h1>No data for url</h1>");
     }
 };
 
@@ -71,12 +69,16 @@ app.get("/product/product3", async (req, res) => {
     }
 });
 
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, "/404error.html"));
+});
+
 app.use((err, req, res, next) => {
-    if (err.message === "No data for url") {
-        res.status(404).send(err.message);
-    }
-    console.error(err);
-    res.status(401).send(err.message);
+    console.log("Error Detected!");
+    res.status(500).send(err.message);
+    setTimeout(() => {
+        console.error(err);
+    }, 2500);
 });
 
 app.listen(port, () => {
