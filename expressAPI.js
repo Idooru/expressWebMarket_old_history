@@ -79,7 +79,7 @@ app.use((err, req, res, next) => {
     if (err.message === "404") {
         console.error(err);
     } else {
-        res.status(501).send(err.message);
+        res.status(500).send(err.message);
     }
     setTimeout(() => {
         console.error(err);
