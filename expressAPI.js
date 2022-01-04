@@ -77,7 +77,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     console.log(" ### Error Detected! ###");
     if (err.message === "404") {
-        console.error(err);
+        console.error("404 Error");
     } else {
         res.status(500).send(err.message);
     }
