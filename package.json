@@ -4,7 +4,7 @@
     "description": "",
     "main": "test.js",
     "scripts": {
-        "start": "nodemon expressAPI"
+        "start": "nodemon test.js"
     },
     "author": "",
     "license": "ISC"
