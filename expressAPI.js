@@ -38,17 +38,6 @@ app.use("/product/:addr", (req, res, next) => {
     next();
 });
 
-// (async () => {
-//     const arrayNum = await getNumWithAxios();
-
-//     for (let i = 1; i <= arrayNum; i++) {
-//         for (let j = 0; j < productPackage.length; j++) {
-//             app.use(`/product/product${i}`);
-//         }
-
-//     }
-// })();
-
 app.use(`/product/product${1}`, product1Router);
 app.use("/product/product2", product2Router);
 app.use("/product/product3", product3Router);
