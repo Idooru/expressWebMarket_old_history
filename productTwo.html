@@ -17,17 +17,11 @@
         <script>
             (async () => {
                 try {
-                    const getAxios = await axios.get(
-                        "https://b2ef45f8-e166-41d7-bd35-9ad159028fbf.mock.pstmn.io/test"
-                    );
-                    const id = JSON.stringify(getAxios.data.products[1].id);
-                    const name = JSON.stringify(getAxios.data.products[1].name);
-                    const price = JSON.stringify(
-                        getAxios.data.products[1].price
-                    );
-                    const seller = JSON.stringify(
-                        getAxios.data.products[1].seller
-                    );
+                    const getAxios = await axios.get("http://127.0.0.1:3257");
+                    const id = JSON.stringify(getAxios.data[1].id);
+                    const name = JSON.stringify(getAxios.data[1].name);
+                    const price = JSON.stringify(getAxios.data[1].price);
+                    const seller = JSON.stringify(getAxios.data[1].seller);
                     document.querySelector("#idForm").innerHTML = "id:" + id;
                     document.querySelector("#nameForm").innerHTML =
                         "name:" + name;

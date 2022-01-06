@@ -2,6 +2,7 @@ const axios = require("axios");
 const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
+const cors = require("cors");
 const app = express();
 const hostName = "127.0.0.1";
 const port = process.env.PORT || 5147;
@@ -19,6 +20,7 @@ const getNumWithAxios = async () => {
 };
 
 app.use(morgan("dev"));
+app.use(cors());
 
 const mainRouter = require("./routes/main");
 const productRouter = require("./routes/product");
