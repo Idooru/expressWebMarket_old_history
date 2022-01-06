@@ -40,7 +40,7 @@ app.use("/product/:addr", (req, res, next) => {
     next();
 });
 
-app.use(`/product/product${1}`, product1Router);
+app.use(`/product/product1`, product1Router);
 app.use("/product/product2", product2Router);
 app.use("/product/product3", product3Router);
 
