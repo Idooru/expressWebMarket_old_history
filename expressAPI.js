@@ -1,3 +1,4 @@
+// when you get this file, install modules from npm
 const axios = require("axios");
 const express = require("express");
 const path = require("path");
@@ -28,11 +29,6 @@ const product1Router = require("./routes/product1");
 const product2Router = require("./routes/product2");
 const product3Router = require("./routes/product3");
 
-const productPackage = [product1Router, product2Router, product3Router];
-
-for (let i = 0; i < productPackage.length; i++) {
-    productPackage[i];
-}
 app.use("/", mainRouter);
 app.use("/product", productRouter);
 app.use("/product/:addr", (req, res, next) => {

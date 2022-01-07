@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const Port = process.env.PORT || 3257;
 const hostName = "127.0.0.1";
-const axios = require("axios");
+
 const cors = require("cors");
 
 app.set("port", Port);
