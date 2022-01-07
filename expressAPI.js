@@ -9,17 +9,6 @@ const hostName = "127.0.0.1";
 const port = process.env.PORT || 5147;
 require("./productServer1");
 
-const getNumWithAxios = async () => {
-    try {
-        const result = await axios.get("http://127.0.0.1:3257");
-        const arrayNum = result.data.length;
-        // console.log(arrayNum);
-        return arrayNum;
-    } catch (err) {
-        console.error(err);
-    }
-};
-
 app.use(morgan("dev"));
 app.use(cors());
 
@@ -36,7 +25,7 @@ app.use("/product/:addr", (req, res, next) => {
     next();
 });
 
-app.use(`/product/product1`, product1Router);
+app.use("/product/product1", product1Router);
 app.use("/product/product2", product2Router);
 app.use("/product/product3", product3Router);
 
