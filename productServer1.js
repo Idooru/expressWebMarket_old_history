@@ -40,5 +40,3 @@ app.listen(app.get("port"), () => {
     console.log("상품 정보 서버가 실행중입니다.");
     console.log(`Product Server (http://${hostName}:${Port})`);
 });
-
-module.exports = { hostName, Port };
