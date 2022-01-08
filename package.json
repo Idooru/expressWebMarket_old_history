@@ -2,9 +2,9 @@
     "name": "small_project",
     "version": "1.0.0",
     "description": "",
-    "main": "test.js",
+    "main": "expressAPI.js",
     "scripts": {
-        "start": "nodemon expressAPI.js"
+        "start": "nodemon expressAPI.mjs"
     },
     "author": "",
     "license": "ISC",

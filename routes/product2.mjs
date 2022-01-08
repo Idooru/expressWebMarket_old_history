@@ -1,12 +1,12 @@
-const express = require("express");
-const axios = require("axios");
-const showPage = require("../modules/showPage");
+import express from "express";
+import axios from "axios";
+import showPage from "../modules/showPage.mjs";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
     try {
         const result = await axios.get("http://127.0.0.1:3257");
-        const productID = String(result.data[2].id);
+        const productID = String(result.data[1].id);
 
         showPage(productID, res);
         console.log("Request Type:", req.method);
@@ -15,4 +15,4 @@ router.get("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

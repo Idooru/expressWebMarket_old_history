@@ -1,6 +1,6 @@
-const express = require("express");
-const axios = require("axios");
-const showPage = require("../modules/showPage");
+import express from "express";
+import axios from "axios";
+import showPage from "../modules/showPage.mjs";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -15,4 +15,4 @@ router.get("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
