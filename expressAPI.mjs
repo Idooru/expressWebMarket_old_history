@@ -19,13 +19,24 @@ import product1Router from "./routes/product1.mjs";
 import product2Router from "./routes/product2.mjs";
 import product3Router from "./routes/product3.mjs";
 
+const routerBox = [product1Router, product2Router, product3Router];
+
 app.use("/", mainRouter);
 app.use("/product", productRouter);
 app.use("/product/:addr", (req, res, next) => {
     console.log(`you connect on /product/${req.params.addr}`);
     next();
 });
+
 const data = getNum();
+let i;
+let j;
+for (i = 1; i <= data; i++) {
+    for (j in routerBox) {
+        app.use(`/product/product${i}`, j);
+    }
+}
+
 app.use("/product/product1", product1Router);
 app.use("/product/product2", product2Router);
 app.use("/product/product3", product3Router);
