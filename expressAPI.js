@@ -38,9 +38,9 @@ for (i = 1; i <= data; i++) {
     }
 }
 
-app.use(`/product/product${1}`, funcBox[1]);
-app.use(`/product/product${2}`, funcBox[2]);
-app.use(`/product/product${3}`, funcBox[3]);
+// app.use(`/product/product${1}`, funcBox[1]);
+// app.use(`/product/product${2}`, funcBox[2]);
+// app.use(`/product/product${3}`, funcBox[3]);
 
 app.use((req, res, next) => {
     res.status(404).sendFile(path.join(__dirname, "/404error.html"));
