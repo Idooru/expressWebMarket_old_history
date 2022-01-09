@@ -3,8 +3,8 @@ import express from "express";
 import path from "path";
 import morgan from "morgan";
 import cors from "cors";
-import getNum from "./modules/getNum.mjs";
-import "./productServer1.mjs";
+import getNum from "./modules/getNum.js";
+import "./productServer1.js";
 
 const app = express();
 const hostName = "127.0.0.1";
@@ -13,13 +13,11 @@ const port = process.env.PORT || 5147;
 app.use(morgan("dev"));
 app.use(cors());
 
-import mainRouter from "./routes/main.mjs";
-import productRouter from "./routes/product.mjs";
-import product1Router from "./routes/product1.mjs";
-import product2Router from "./routes/product2.mjs";
-import product3Router from "./routes/product3.mjs";
-
-const routerBox = [product1Router, product2Router, product3Router];
+import mainRouter from "./routes/main.js";
+import productRouter from "./routes/product.js";
+import product1Router from "./routes/product1.js";
+import product2Router from "./routes/product2.js";
+import product3Router from "./routes/product3.js";
 
 app.use("/", mainRouter);
 app.use("/product", productRouter);
@@ -27,16 +25,7 @@ app.use("/product/:addr", (req, res, next) => {
     console.log(`you connect on /product/${req.params.addr}`);
     next();
 });
-
 const data = getNum();
-let i;
-let j;
-for (i = 1; i <= data; i++) {
-    for (j in routerBox) {
-        app.use(`/product/product${i}`, j);
-    }
-}
-
 app.use("/product/product1", product1Router);
 app.use("/product/product2", product2Router);
 app.use("/product/product3", product3Router);

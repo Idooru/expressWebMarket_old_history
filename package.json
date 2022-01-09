@@ -1,17 +1,29 @@
 {
     "name": "small_project",
     "version": "1.0.0",
-    "description": "",
     "main": "expressAPI.js",
+    "type": "module",
     "scripts": {
         "start": "nodemon expressAPI.mjs"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@std/esm": "^0.26.0",
         "axios": "^0.24.0",
         "cors": "^2.8.5",
         "express": "^4.17.2",
+        "moment": "^2.29.1",
         "morgan": "^1.10.0"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/shere1765/small_project_one.git"
+    },
+    "keywords": [],
+    "bugs": {
+        "url": "https://github.com/shere1765/small_project_one/issues"
+    },
+    "homepage": "https://github.com/shere1765/small_project_one#readme",
+    "description": ""
 }
