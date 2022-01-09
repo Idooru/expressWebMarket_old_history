@@ -25,10 +25,22 @@ app.use("/product/:addr", (req, res, next) => {
     console.log(`you connect on /product/${req.params.addr}`);
     next();
 });
+
 const data = getNum();
-app.use("/product/product1", product1Router);
-app.use("/product/product2", product2Router);
-app.use("/product/product3", product3Router);
+
+const funcBox = ["start", product1Router, product2Router, product3Router];
+
+let i;
+let j;
+for (i = 1; i <= data; i++) {
+    for (j = 1; j <= funcBox.length; j++) {
+        if (i === j) app.use(`product/product${i}`, funcBox[j]);
+    }
+}
+
+app.use(`/product/product${1}`, funcBox[1]);
+app.use(`/product/product${2}`, funcBox[2]);
+app.use(`/product/product${3}`, funcBox[3]);
 
 app.use((req, res, next) => {
     res.status(404).sendFile(path.join(__dirname, "/404error.html"));
