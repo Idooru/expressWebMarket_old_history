@@ -11,9 +11,6 @@ const connect = async () => {
             `mongodb://${process.env.NAME}:${process.env.PASSWORD}@localhost:27017/admin`,
             { dbName: "nodejs" }
         );
-        if ("a" === 1) {
-            throw new Error("하기싫어");
-        }
     } catch (err) {
         setTimeout(() => {
             console.error(err);
