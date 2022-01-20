@@ -12,19 +12,19 @@ router.get("/:id/info", async (req, res, next) => {
         );
         switch (req.params.id) {
             case "1":
-                productInfo = productInfo[0];
-                break;
-            case "2":
                 productInfo = productInfo[1];
                 break;
-            case "3":
+            case "2":
                 productInfo = productInfo[2];
                 break;
-            case "4":
+            case "3":
                 productInfo = productInfo[3];
                 break;
-            case "5":
+            case "4":
                 productInfo = productInfo[4];
+                break;
+            case "5":
+                productInfo = productInfo[5];
                 break;
             default:
                 productInfo = "no more product";
