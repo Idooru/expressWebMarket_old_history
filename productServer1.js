@@ -1,13 +1,12 @@
 import express from "express";
-import cors from "cors";
 
 const app = express();
-const Port = process.env.PORT || 3257;
-const hostName = "127.0.0.1";
-
-app.set("port", Port);
-
-app.use(cors());
+app.set("port", process.env.PORT || 3002);
+app.listen(app.get("port"), () => {
+    console.log(
+        `Product server is running at http://localhost:${app.get("port")}`
+    );
+});
 
 app.get("/", (req, res) => {
     const products = [
@@ -33,12 +32,5 @@ app.get("/", (req, res) => {
             imageUrl: "images/products/keyboard1.jpg",
         },
     ];
-    res.send(products);
+    res.json(products);
 });
-
-app.listen(app.get("port"), () => {
-    console.log("상품 정보 서버가 실행중입니다.");
-    console.log(`Product Server (http://${hostName}:${Port})`);
-});
-
-export default { hostName, Port };
