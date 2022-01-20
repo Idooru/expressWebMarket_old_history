@@ -44,3 +44,5 @@ app.use((err, req, res, next) => {
 app.listen(app.get("port"), () => {
     console.log(`API server is running at http://localhost:${app.get("port")}`);
 });
+
+// test server
