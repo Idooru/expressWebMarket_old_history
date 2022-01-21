@@ -7,7 +7,7 @@ router.get("/", async (req, res, next) => {
     try {
         const products = await Product.find({});
         const productNames = [];
-        for (let i = 0; i < products.length; i++) {
+        for (let i = 1; i < products.length; i++) {
             productNames.push(products[i].name);
         }
         console.log(products);

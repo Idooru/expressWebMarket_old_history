@@ -7,10 +7,11 @@ const connect = async () => {
         if (process.env.NODE_ENV !== "production") {
             mongoose.set("debug", true);
         }
-        const result = await mongoose.connect(
+        await mongoose.connect(
             `mongodb://${process.env.NAME}:${process.env.PASSWORD}@localhost:27017/admin`,
             { dbName: "nodejs" }
         );
+        console.log("몽고 디비 연결 성공");
     } catch (err) {
         setTimeout(() => {
             console.error(err);

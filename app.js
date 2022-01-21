@@ -16,15 +16,13 @@ nunjucks.configure("views", {
 app.use(morgan("dev"));
 app.use(cors());
 
-mongodbConnect();
-
 import mainRouter from "./routes/main.js";
 import productMainRouter from "./routes/productMain.js";
 import productDetailRouter from "./routes/productDetail.js";
 
 app.use("/", mainRouter);
 app.use("/productMain", productMainRouter);
-app.use("/productMain", productDetailRouter);
+app.use("/products", productDetailRouter);
 
 app.use((req, res, next) => {
     const error = new Error(`${req.method} ${req.url}가 존재하지 않습니다.`);
@@ -41,7 +39,7 @@ app.use((err, req, res, next) => {
     res.render("error");
 });
 
-app.listen(app.get("port"), () => {
+app.listen(app.get("port"), mongodbConnect(), () => {
     console.log(`API server is running at http://localhost:${app.get("port")}`);
 });
 
