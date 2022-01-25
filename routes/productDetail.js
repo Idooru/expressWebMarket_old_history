@@ -26,8 +26,9 @@ router.get("/:id/info", async (req, res, next) => {
                 productInfo = productInfo[5];
                 break;
             default:
-                productInfo = "No more product on that url";
-                throw new Error(productInfo);
+                res.locals.message = "No more product on that url";
+                res.render("noProduct");
+                return 0;
         }
         console.log(productInfo.price);
         res.locals.id = req.params.id;
