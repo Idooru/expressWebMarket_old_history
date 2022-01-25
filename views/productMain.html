@@ -5,8 +5,12 @@
         <title>productMain</title>
     </head>
     <body>
-        <h1>This is product's List!</h1>
+        <h1>This is product's List</h1>
         <h2>products list</h2>
-        {{productNames}}
+        <ul>
+            {% for item in productNames %}
+            <li>{{item}}</li>
+            {% endfor %}
+        </ul>
     </body>
 </html>

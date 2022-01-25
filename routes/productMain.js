@@ -11,7 +11,8 @@ router.get("/", async (req, res, next) => {
             productNames.push(products[i].name);
         }
         console.log(products);
-        res.render("productMain", { productNames });
+        res.locals.productNames = productNames;
+        res.render("productMain");
     } catch (err) {
         console.error(err);
         next(err);

@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.get("/:id/info", async (req, res, next) => {
     try {
-        console.log(typeof req.params.id, req.params.id);
         let productInfo = await Product.find(
             {},
             { _id: 0, name: 1, price: 1, origin: 1, type: 1 }
@@ -27,12 +26,16 @@ router.get("/:id/info", async (req, res, next) => {
                 productInfo = productInfo[5];
                 break;
             default:
-                productInfo = "no more product";
-                throw new Error(data);
+                productInfo = "No more product on that url";
+                throw new Error(productInfo);
         }
-        res.send(
-            `<p>상품번호 : ${req.params.id}</p>  <p>상품정보 : ${productInfo}</p>`
-        );
+        console.log(productInfo.price);
+        res.locals.id = req.params.id;
+        res.locals.productName = productInfo.name;
+        res.locals.productPrice = productInfo.price;
+        res.locals.productOrigin = productInfo.origin;
+        res.locals.productType = productInfo.type;
+        res.render("productInfo");
     } catch (err) {
         console.error(err);
         next(err);
