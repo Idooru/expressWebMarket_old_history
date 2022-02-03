@@ -6,7 +6,7 @@ const router = express.Router();
 router.post("/", async (req, res, next) => {
     const { name, price, origin, type } = req.body;
     try {
-        const products = await Product.create({
+        await Product.create({
             name,
             price,
             origin,
