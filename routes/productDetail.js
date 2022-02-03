@@ -25,12 +25,15 @@ router.get("/:id/info", async (req, res, next) => {
             case "5":
                 productInfo = productInfo[5];
                 break;
+            case "6":
+                productInfo = productInfo[6];
+                break;
             default:
                 res.locals.message = "No more product on that url";
                 res.render("noProduct");
                 return 0;
         }
-        console.log(productInfo.price);
+        console.log(req.params.id);
         res.locals.id = req.params.id;
         res.locals.productName = productInfo.name;
         res.locals.productPrice = productInfo.price;

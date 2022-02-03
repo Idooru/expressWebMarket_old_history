@@ -4,6 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 import nunjucks from "nunjucks";
 import mongodbConnect from "./schema/index.js";
+import session from "express-session";
 
 const app = express();
 app.set("port", process.env.PORT || 5147);
@@ -15,14 +16,29 @@ nunjucks.configure("views", {
 
 app.use(morgan("dev"));
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(
+    session({
+        resave: false,
+        saveUninitialized: false,
+        secret: process.env.COOKIE_SECRET,
+        cookie: {
+            httpOnly: true,
+            secure: false,
+        },
+    })
+);
 
 import mainRouter from "./routes/main.js";
 import productMainRouter from "./routes/productMain.js";
 import productDetailRouter from "./routes/productDetail.js";
+import productPostRouter from "./routes/productPost.js";
 
 app.use("/", mainRouter);
 app.use("/productMain", productMainRouter);
 app.use("/products", productDetailRouter);
+app.use("/products/Post", productPostRouter);
 
 app.use((req, res, next) => {
     const error = new Error(`${req.method} ${req.url}가 존재하지 않습니다.`);
