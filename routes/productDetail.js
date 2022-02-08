@@ -1,14 +1,18 @@
-import express from "express";
-import Product from "../schema/product.js";
+const express = require("express");
+const Product = require("../models/products");
 
 const router = express.Router();
 
 router.get("/:id/info", async (req, res, next) => {
     try {
-        let productInfo = await Product.find(
-            {},
-            { _id: 0, name: 1, price: 1, origin: 1, type: 1 }
-        );
+        let productInfo = await Product.findAll({});
+        // let dataBox = [];
+
+        // for (let key in productInfo) {
+        //     if (key === "0") continue;
+        //     dataBox.push(productInfo[key].dataValues);
+        // }
+
         switch (req.params.id) {
             case "1":
                 productInfo = productInfo[1];
@@ -28,12 +32,28 @@ router.get("/:id/info", async (req, res, next) => {
             case "6":
                 productInfo = productInfo[6];
                 break;
+            case "7":
+                productInfo = productInfo[7];
+                break;
+            case "8":
+                productInfo = productInfo[8];
+                break;
+            case "9":
+                productInfo = productInfo[9];
+                break;
+            case "10":
+                productInfo = productInfo[10];
+                break;
+            case "11":
+                productInfo = productInfo[11];
+                break;
+
             default:
                 res.locals.message = "No more product on that url";
                 res.render("noProduct");
                 return 0;
         }
-        console.log(req.params.id);
+
         res.locals.id = req.params.id;
         res.locals.productName = productInfo.name;
         res.locals.productPrice = productInfo.price;
@@ -46,4 +66,4 @@ router.get("/:id/info", async (req, res, next) => {
     }
 });
 
-export default router;
+module.exports = router;

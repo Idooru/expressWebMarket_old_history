@@ -1,11 +1,11 @@
-import express from "express";
-import Product from "../schema/product.js";
+const express = require("express");
+const Product = require("../models/products");
 
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
     try {
-        const products = await Product.find({});
+        const products = await Product.findAll({});
         const productNames = [];
         for (let i = 1; i < products.length; i++) {
             productNames.push(products[i].name);
@@ -19,4 +19,4 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-export default router;
+module.exports = router;
