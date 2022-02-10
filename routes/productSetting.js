@@ -3,7 +3,7 @@ const Product = require("../models/products");
 
 const router = express.Router();
 
-router.post("/createProduct", async (req, res, next) => {
+router.post("/createProduct", async (req, res) => {
     const { name, price, origin, type } = req.body;
     try {
         const products = await Product.create({
@@ -14,19 +14,21 @@ router.post("/createProduct", async (req, res, next) => {
         });
         res.status(201).json(products);
     } catch (err) {
-        next(err);
-        res.status(204).send("값을 받지 못하였습니다.");
+        if (err.message === "Validation error") {
+            return res.status(400).send("같은 이름의 상품이 존재합니다.");
+        }
+        res.status(400).send("값을 받지 못하였습니다.");
     }
 });
 
-router.patch("/modifyProduct/:id", async (req, res, next) => {
+router.patch("/modifyProduct/", async (req, res, next) => {
     const { id, name, price, origin, type } = req.body;
-    const params = req.params.id;
+    const query = req.query.ID;
 
     try {
         const getOld = async () => {
             const BeforeProducts = await Product.findOne({
-                where: { id: params },
+                where: { id: query },
             });
             const resultByOldProducts = JSON.stringify(
                 BeforeProducts.dataValues
@@ -44,7 +46,7 @@ router.patch("/modifyProduct/:id", async (req, res, next) => {
                 type,
             },
             {
-                where: { id: params },
+                where: { id: query },
             }
         );
         const getNew = async () => {
@@ -68,13 +70,13 @@ router.patch("/modifyProduct/:id", async (req, res, next) => {
     }
 });
 
-router.delete("/removeProduct/:id", async (req, res, next) => {
+router.delete("/removeProduct/", async (req, res, next) => {
     const { id } = req.body;
-    const params = req.params.id;
+    const query = req.query.ID;
     try {
         const getOld = async () => {
             const BeforeProducts = await Product.findOne({
-                where: { id: params },
+                where: { id: query },
             });
             const resultByOldProducts = JSON.stringify(
                 BeforeProducts.dataValues
@@ -84,7 +86,7 @@ router.delete("/removeProduct/:id", async (req, res, next) => {
         const resultByGetOld = await getOld();
 
         await Product.destroy({
-            where: { id: params },
+            where: { id: query },
         });
         const getNew = async () => {
             const AfterProducts = await Product.findOne({
