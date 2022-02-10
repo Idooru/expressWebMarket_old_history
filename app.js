@@ -48,7 +48,7 @@ const mainRouter = require("./routes/main.js");
 const productMainRouter = require("./routes/productMain");
 const productDetailRouter = require("./routes/productDetail");
 const productSettingRouter = require("./routes/productSetting");
-// const authRouter = require("./routes/auth");
+const authRouter = require("./routes/auth");
 
 app.use("/favicon.ico", (req, res) => {
     res.send();
@@ -58,7 +58,7 @@ app.use("/", mainRouter);
 app.use("/productMain", productMainRouter);
 app.use("/products", productDetailRouter);
 app.use("/products", productSettingRouter);
-// app.use("/auth", authRouter);
+app.use("/auth", authRouter);
 
 app.use((req, res, next) => {
     const error = new Error(`${req.method} ${req.url}가 존재하지 않습니다.`);

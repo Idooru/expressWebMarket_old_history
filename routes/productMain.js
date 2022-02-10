@@ -14,7 +14,6 @@ router.get("/", async (req, res, next) => {
         res.locals.productNames = productNames;
         res.render("productMain");
     } catch (err) {
-        console.error(err);
         next(err);
     }
 });

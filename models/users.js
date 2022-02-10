@@ -1,34 +1,31 @@
 const Sequelize = require("sequelize");
 
-class Product extends Sequelize.Model {
+class User extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-                name: {
-                    type: Sequelize.STRING(20),
-                    allowNull: false,
+                email: {
+                    type: Sequelize.STRING(25),
                     unique: true,
-                },
-                price: {
-                    type: Sequelize.INTEGER.UNSIGNED,
                     allowNull: false,
                 },
-                origin: {
-                    type: Sequelize.STRING(20),
+                password: {
+                    type: Sequelize.STRING(100),
                     allowNull: false,
                 },
-                type: {
-                    type: Sequelize.STRING(20),
+                nickname: {
+                    type: Sequelize.STRING(15),
+                    unique: true,
                     allowNull: false,
                 },
             },
             {
                 sequelize,
                 timestamps: true,
-                paranoid: false,
                 underscored: false,
-                modelName: "Product",
-                tableName: "products",
+                paranoid: false,
+                modelName: "User",
+                tableName: "users",
                 charset: "utf8",
                 collate: "utf8_general_ci",
             }
@@ -36,4 +33,4 @@ class Product extends Sequelize.Model {
     }
 }
 
-module.exports = Product;
+module.exports = User;

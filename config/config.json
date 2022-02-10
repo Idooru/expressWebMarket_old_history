@@ -2,7 +2,7 @@
     "development": {
         "username": "root",
         "password": "shere12345!",
-        "database": "express_product",
+        "database": "expressapi",
         "host": "127.0.0.1",
         "dialect": "mysql"
     },

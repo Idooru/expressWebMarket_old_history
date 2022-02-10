@@ -12,11 +12,10 @@ router.post("/createProduct", async (req, res, next) => {
             origin,
             type,
         });
-        res.json(products);
+        res.status(201).json(products);
     } catch (err) {
-        console.error(err);
         next(err);
-        res.send("값을 받지 못하였습니다.");
+        res.status(204).send("값을 받지 못하였습니다.");
     }
 });
 
@@ -26,11 +25,11 @@ router.patch("/modifyProduct/:id", async (req, res, next) => {
 
     try {
         const getOld = async () => {
-            const BeforeProducts = await Product.findAll({
+            const BeforeProducts = await Product.findOne({
                 where: { id: params },
             });
             const resultByOldProducts = JSON.stringify(
-                BeforeProducts[0].dataValues
+                BeforeProducts.dataValues
             );
             return resultByOldProducts;
         };
@@ -59,9 +58,12 @@ router.patch("/modifyProduct/:id", async (req, res, next) => {
         const resultByGetNew = await getNew();
         const message = "상품의 정보가 변경되었습니다.";
 
-        res.render("productUD", { message, resultByGetOld, resultByGetNew });
+        res.status(201).render("productUD", {
+            message,
+            resultByGetOld,
+            resultByGetNew,
+        });
     } catch (err) {
-        console.error(err);
         next(err);
     }
 });
@@ -71,11 +73,11 @@ router.delete("/removeProduct/:id", async (req, res, next) => {
     const params = req.params.id;
     try {
         const getOld = async () => {
-            const BeforeProducts = await Product.findAll({
+            const BeforeProducts = await Product.findOne({
                 where: { id: params },
             });
             const resultByOldProducts = JSON.stringify(
-                BeforeProducts[0].dataValues
+                BeforeProducts.dataValues
             );
             return resultByOldProducts;
         };
@@ -85,7 +87,7 @@ router.delete("/removeProduct/:id", async (req, res, next) => {
             where: { id: params },
         });
         const getNew = async () => {
-            const AfterProducts = await Product.findAll({
+            const AfterProducts = await Product.findOne({
                 where: { id },
             });
             const resultByNewProducts = JSON.stringify(AfterProducts);
@@ -95,9 +97,12 @@ router.delete("/removeProduct/:id", async (req, res, next) => {
         const resultByGetNew = await getNew();
         const message = "상품의 정보가 변경되었습니다.";
 
-        res.render("productUD", { message, resultByGetOld, resultByGetNew });
+        res.status(201).render("productUD", {
+            message,
+            resultByGetOld,
+            resultByGetNew,
+        });
     } catch (err) {
-        console.error(err);
         next(err);
     }
 });

@@ -2,7 +2,6 @@ const express = require("express");
 const Product = require("../models/products");
 
 const router = express.Router();
-
 router.get("/:id/info", async (req, res, next) => {
     try {
         let productInfo = await Product.findAll({});
@@ -22,7 +21,6 @@ router.get("/:id/info", async (req, res, next) => {
         res.locals.productType = productInfo.type;
         res.render("productInfo");
     } catch (err) {
-        console.error(err);
         next(err);
     }
 });

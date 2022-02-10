@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config.json")[env];
 const Product = require("./products");
+const User = require("./users");
 
 const db = {};
 
@@ -14,7 +15,9 @@ const sequelize = new Sequelize(
 
 db.sequelize = sequelize;
 db.Product = Product;
+db.User = User;
 
 Product.init(sequelize);
+User.init(sequelize);
 
 module.exports = db;
