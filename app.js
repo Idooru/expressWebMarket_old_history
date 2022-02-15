@@ -44,20 +44,18 @@ app.use(
     })
 );
 
-const mainRouter = require("./routes/main.js");
-const productMainRouter = require("./routes/productMain");
-const productDetailRouter = require("./routes/productDetail");
-const productSettingRouter = require("./routes/productSetting");
+const productRouter = require("./routes/products.js");
 const authRouter = require("./routes/auth");
 
 app.use("/favicon.ico", (req, res) => {
     res.send();
 });
 
-app.use("/", mainRouter);
-app.use("/productMain", productMainRouter);
-app.use("/products", productDetailRouter);
-app.use("/products", productSettingRouter);
+app.get("/", (req, res) => {
+    res.render("expressAPI.html");
+});
+
+app.use("/products", productRouter);
 app.use("/auth", authRouter);
 
 app.use((req, res, next) => {
