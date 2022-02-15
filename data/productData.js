@@ -13,28 +13,28 @@ async function productFindOne(id) {
         return product;
     } catch (err) {
         if (err.message === "null") {
-            return {
-                status: "error",
-                message: "상품을 찾을 수 없습니다.",
-            };
+            return new Error("no Product");
         } else {
-            return {
-                status: "error",
-                message: err.message,
-            };
+            return new Error(err.message);
         }
     }
 }
 
 async function productFindAll() {
     try {
-        const result = await Product.findAll({});
-        return result;
+        const product = await Product.findAll({});
+
+        if (product === null) {
+            throw new Error("null");
+        }
+
+        return product;
     } catch (err) {
-        return {
-            status: "error",
-            message: err.message,
-        };
+        if (err.message === "null") {
+            return new Error("no Product");
+        } else {
+            return new Error(err.message);
+        }
     }
 }
 
@@ -50,15 +50,9 @@ async function getBeforeProduct(id) {
             err.message ===
             "Cannot read properties of null (reading 'dataValues')"
         ) {
-            return {
-                status: "error",
-                message: "상품을 찾을 수 없습니다.",
-            };
+            return new Error("no Product");
         } else {
-            return {
-                status: "error",
-                message: err.message,
-            };
+            return new Error(err.message);
         }
     }
 }
@@ -75,15 +69,9 @@ async function getAfterProduct(id) {
             err.message ===
             "Cannot read properties of null (reading 'dataValues')"
         ) {
-            return {
-                status: "error",
-                message: "상품을 찾을 수 없습니다.",
-            };
+            return new Error("no Product");
         } else {
-            return {
-                status: "error",
-                message: err.message,
-            };
+            return new Error(err.message);
         }
     }
 }
@@ -101,15 +89,9 @@ async function productCreate(package) {
         return createdProduct;
     } catch (err) {
         if (err.message === "Validation error") {
-            return {
-                status: "error",
-                message: "같은 이름의 상품이 존재합니다.",
-            };
+            return new Error("same Product");
         } else {
-            return {
-                status: "error",
-                message: err.message,
-            };
+            return new Error(err.message);
         }
     }
 }
@@ -130,10 +112,7 @@ async function productUpdate(package, paramsId) {
             }
         );
     } catch (err) {
-        return {
-            status: "error",
-            message: err.message,
-        };
+        throw new Error(err.message);
     }
 }
 
@@ -143,10 +122,7 @@ async function productDestroy(paramsId) {
             where: { id: paramsId },
         });
     } catch (err) {
-        return {
-            status: "error",
-            message: err.message,
-        };
+        throw new Error(err.message);
     }
 }
 

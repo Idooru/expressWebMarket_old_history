@@ -59,16 +59,34 @@ app.use("/products", productRouter);
 app.use("/auth", authRouter);
 
 app.use((req, res, next) => {
-    const error = new Error(`${req.method} ${req.url}가 존재하지 않습니다.`);
+    const error = new Error(`${req.method} ${req.url} does not exist`);
     error.status = 404;
     next(error);
 });
 
 app.use((err, req, res, next) => {
     console.log(" ### Error Detected! ###");
+    if (err.message === "no Product") {
+        res.locals.warning = "No applicable products found";
+        res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
+        res.locals.error.status = 404;
+        res.locals.message =
+            "The requested product could not be found, please go back.";
+        console.error(err);
+        return res.render("occasionalError");
+    }
+    if (err.message === "same Product") {
+        res.locals.warning = "A product with the same name exists";
+        res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
+        res.locals.error.status = 400;
+        res.locals.message =
+            "The name of the product cannot be the same, so please reset the name";
+        console.error(err);
+        return res.render("occasionalError");
+    }
     res.locals.message = err.message;
     res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
-    res.status(err.status || 500);
+    res.locals.error.status = 500;
     console.error(err);
     res.render("error");
 });
