@@ -111,8 +111,9 @@ async function productUpdate(package, paramsId) {
                 where: { id: paramsId },
             }
         );
+        return 0;
     } catch (err) {
-        throw new Error(err.message);
+        return new Error(err.message);
     }
 }
 
@@ -121,8 +122,9 @@ async function productDestroy(paramsId) {
         await Product.destroy({
             where: { id: paramsId },
         });
+        return 0;
     } catch (err) {
-        throw new Error(err.message);
+        return new Error(err.message);
     }
 }
 
