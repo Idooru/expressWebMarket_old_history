@@ -113,7 +113,11 @@ async function productUpdate(package, paramsId) {
         );
         return 0;
     } catch (err) {
-        return new Error(err.message);
+        if (err.message === "Validation error") {
+            return new Error("same Product");
+        } else {
+            return new Error(err.message);
+        }
     }
 }
 
