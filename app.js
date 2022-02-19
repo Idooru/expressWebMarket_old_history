@@ -52,7 +52,7 @@ app.use("/favicon.ico", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-    res.render("expressAPI.html");
+    res.status(200).render("expressAPI.html");
 });
 
 app.use("/products", productRouter);
@@ -82,6 +82,14 @@ app.use((err, req, res, next) => {
         res.locals.message =
             "The name of the product cannot be the same, so please reset the name";
         console.error(err);
+        return res.render("occasionalError");
+    }
+    if (err.message === "Form Null") {
+        res.locals.warning = "One of the forms is not filled in";
+        res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
+        res.locals.error.status = 400;
+        res.locals.message =
+            "You forgot to fill out the form. Please check your input";
         return res.render("occasionalError");
     }
     res.locals.message = err.message;

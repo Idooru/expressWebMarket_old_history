@@ -3,7 +3,7 @@ const dataWorker = require("../data/productData");
 async function getProductDetail(req, res, next) {
     const paramsId = req.params.id;
 
-    const product = await dataWorker.productFindOne(paramsId);
+    const product = await dataWorker.FindOne(paramsId, next);
 
     if (product.message) {
         return next(product);
@@ -18,25 +18,28 @@ async function getProductDetail(req, res, next) {
 }
 
 async function getProductMain(req, res, next) {
-    const products = await dataWorker.productFindAll();
+    const products = await dataWorker.FindAll();
 
     if (products.message) {
         return next(products);
     }
 
-    const productNames = [];
-    for (let i = 1; i < products.length; i++) {
-        productNames.push(products[i].name);
-        console.log(products[i].dataValues);
-    }
+    const result = products.map((value, index) => {
+        const productNames = [];
+        productNames.push(products[index].name);
+        console.log(products[index].dataValues);
+        return productNames;
+    });
 
-    res.locals.productNames = productNames;
+    result.shift();
+
+    res.locals.productNames = result;
     res.render("productMain");
 }
 
 async function createProduct(req, res, next) {
     const package = req.body;
-    const products = await dataWorker.productCreate(package);
+    const products = await dataWorker.Create(package);
 
     if (products.message) {
         return next(products);
@@ -51,19 +54,19 @@ async function modifyProduct(req, res, next) {
     const paramsId = req.params.id;
     const package = req.body;
 
-    const getOld = await dataWorker.getBeforeProduct(paramsId);
+    const getOld = await dataWorker.getBefore(paramsId);
 
     if (getOld.message) {
         return next(getOld);
     }
 
-    const updater = await dataWorker.productUpdate(package, paramsId);
+    const updater = await dataWorker.Update(package, paramsId);
 
     if (updater.message) {
         return next(updater);
     }
 
-    const getNew = await dataWorker.getAfterProduct(paramsId);
+    const getNew = await dataWorker.getAfter(paramsId);
 
     if (getNew.message) {
         return next(getNew);
@@ -81,19 +84,19 @@ async function modifyProduct(req, res, next) {
 async function removeProduct(req, res, next) {
     const paramsId = req.params.id;
 
-    const getOld = await dataWorker.getBeforeProduct(paramsId);
+    const getOld = await dataWorker.getBefore(paramsId);
 
     if (getOld.message) {
         return next(getOld);
     }
 
-    const destroyer = await dataWorker.productDestroy(paramsId);
+    const destroyer = await dataWorker.Destroy(paramsId);
 
     if (destroyer.message) {
         return next(destroyer);
     }
 
-    const getNew = await dataWorker.getAfterProduct(paramsId);
+    const getNew = await dataWorker.getAfter(paramsId);
 
     if (getNew.message) {
         return next(getNew);

@@ -1,6 +1,6 @@
 const Product = require("../models/products");
 
-async function productFindOne(id) {
+async function FindOne(id, next) {
     try {
         const product = await Product.findOne({
             where: { id },
@@ -20,7 +20,7 @@ async function productFindOne(id) {
     }
 }
 
-async function productFindAll() {
+async function FindAll() {
     try {
         const product = await Product.findAll({});
 
@@ -38,7 +38,7 @@ async function productFindAll() {
     }
 }
 
-async function getBeforeProduct(id) {
+async function getBefore(id) {
     try {
         const BeforeProducts = await Product.findOne({
             where: { id },
@@ -57,7 +57,7 @@ async function getBeforeProduct(id) {
     }
 }
 
-async function getAfterProduct(id) {
+async function getAfter(id) {
     try {
         const AfterProducts = await Product.findOne({
             where: { id },
@@ -76,7 +76,7 @@ async function getAfterProduct(id) {
     }
 }
 
-async function productCreate(package) {
+async function Create(package) {
     try {
         const { id, name, price, origin, type } = package;
         const createdProduct = await Product.create({
@@ -90,13 +90,15 @@ async function productCreate(package) {
     } catch (err) {
         if (err.message === "Validation error") {
             return new Error("same Product");
+        } else if (err.message || "notNull Violoation") {
+            return new Error("Form Null");
         } else {
             return new Error(err.message);
         }
     }
 }
 
-async function productUpdate(package, paramsId) {
+async function Update(package, paramsId) {
     try {
         const { id, name, price, origin, type } = package;
         await Product.update(
@@ -115,13 +117,15 @@ async function productUpdate(package, paramsId) {
     } catch (err) {
         if (err.message === "Validation error") {
             return new Error("same Product");
+        } else if (err.message || "notNull Violoation") {
+            return new Error("Form Null");
         } else {
             return new Error(err.message);
         }
     }
 }
 
-async function productDestroy(paramsId) {
+async function Destroy(paramsId) {
     try {
         await Product.destroy({
             where: { id: paramsId },
@@ -133,11 +137,11 @@ async function productDestroy(paramsId) {
 }
 
 module.exports = {
-    productFindOne,
-    productFindAll,
-    getBeforeProduct,
-    getAfterProduct,
-    productCreate,
-    productUpdate,
-    productDestroy,
+    FindOne,
+    FindAll,
+    getBefore,
+    getAfter,
+    Create,
+    Update,
+    Destroy,
 };
