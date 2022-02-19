@@ -1,6 +1,6 @@
 const Product = require("../models/products");
 
-async function FindOne(id, next) {
+async function FindOne(id) {
     try {
         const product = await Product.findOne({
             where: { id },

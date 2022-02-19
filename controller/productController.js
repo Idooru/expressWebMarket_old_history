@@ -3,7 +3,7 @@ const dataWorker = require("../data/productData");
 async function getProductDetail(req, res, next) {
     const paramsId = req.params.id;
 
-    const product = await dataWorker.FindOne(paramsId, next);
+    const product = await dataWorker.FindOne(paramsId);
 
     if (product.message) {
         return next(product);
