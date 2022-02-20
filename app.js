@@ -73,7 +73,7 @@ app.use((err, req, res, next) => {
         res.locals.message =
             "The requested product could not be found, please go back.";
         console.error(err);
-        return res.render("occasionalError");
+        return res.status(404).render("occasionalError");
     }
     if (err.message === "same Product") {
         res.locals.warning = "A product with the same name exists";
@@ -82,7 +82,7 @@ app.use((err, req, res, next) => {
         res.locals.message =
             "The name of the product cannot be the same, so please reset the name";
         console.error(err);
-        return res.render("occasionalError");
+        return res.status(400).render("occasionalError");
     }
     if (err.message === "Form Null") {
         res.locals.warning = "One of the forms is not filled in";
@@ -90,13 +90,13 @@ app.use((err, req, res, next) => {
         res.locals.error.status = 400;
         res.locals.message =
             "You forgot to fill out the form. Please check your input";
-        return res.render("occasionalError");
+        return res.status(400).render("occasionalError");
     }
     res.locals.message = err.message;
     res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
     res.locals.error.status = 500;
     console.error(err);
-    res.render("error");
+    res.status(500).render("error");
 });
 
 app.listen(app.get("port"), () => {

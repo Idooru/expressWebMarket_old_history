@@ -7,34 +7,26 @@ async function FindOne(id) {
         });
 
         if (product === null) {
-            throw new Error("null");
+            throw new Error("no Product");
         }
 
         return product;
     } catch (err) {
-        if (err.message === "null") {
-            return new Error("no Product");
-        } else {
-            return new Error(err.message);
-        }
+        throw err;
     }
 }
 
 async function FindAll() {
     try {
-        const product = await Product.findAll({});
+        const products = await Product.findAll({});
 
-        if (product === null) {
+        if (products === null) {
             throw new Error("null");
         }
 
-        return product;
+        return products;
     } catch (err) {
-        if (err.message === "null") {
-            return new Error("no Product");
-        } else {
-            return new Error(err.message);
-        }
+        throw err;
     }
 }
 
@@ -48,12 +40,11 @@ async function getBefore(id) {
     } catch (err) {
         if (
             err.message ===
-            "Cannot read properties of null (reading 'dataValues')"
+            "'Cannot read properties of null (reading 'dataValues')'"
         ) {
-            return new Error("no Product");
-        } else {
-            return new Error(err.message);
+            throw new Error("no Product");
         }
+        throw err;
     }
 }
 
@@ -65,14 +56,7 @@ async function getAfter(id) {
         const resultByNewProducts = JSON.stringify(AfterProducts);
         return resultByNewProducts;
     } catch (err) {
-        if (
-            err.message ===
-            "Cannot read properties of null (reading 'dataValues')"
-        ) {
-            return new Error("no Product");
-        } else {
-            return new Error(err.message);
-        }
+        throw err;
     }
 }
 
@@ -89,11 +73,11 @@ async function Create(package) {
         return createdProduct;
     } catch (err) {
         if (err.message === "Validation error") {
-            return new Error("same Product");
+            throw new Error("same Product");
         } else if (err.message || "notNull Violoation") {
-            return new Error("Form Null");
+            throw new Error("Form Null");
         } else {
-            return new Error(err.message);
+            throw err;
         }
     }
 }
@@ -113,14 +97,13 @@ async function Update(package, paramsId) {
                 where: { id: paramsId },
             }
         );
-        return 0;
     } catch (err) {
         if (err.message === "Validation error") {
-            return new Error("same Product");
+            throw new Error("same Product");
         } else if (err.message || "notNull Violoation") {
-            return new Error("Form Null");
+            throw new Error("Form Null");
         } else {
-            return new Error(err.message);
+            throw err;
         }
     }
 }
@@ -132,7 +115,7 @@ async function Destroy(paramsId) {
         });
         return 0;
     } catch (err) {
-        return new Error(err.message);
+        throw err;
     }
 }
 
