@@ -1,85 +1,93 @@
 const Product = require("../models/products");
 
 async function FindOne(id) {
+    let product;
+
     try {
-        const product = await Product.findOne({
+        product = await Product.findOne({
             where: { id },
         });
-
-        if (product === null) {
-            throw new Error("no Product");
-        }
-
-        return product;
     } catch (err) {
         throw err;
     }
+
+    if (product === null) throw new Error("no Product");
+
+    return product;
 }
 
 async function FindAll() {
+    let products;
+
     try {
-        const products = await Product.findAll({});
-
-        if (products === null) {
-            throw new Error("null");
-        }
-
-        return products;
+        products = await Product.findAll({});
     } catch (err) {
         throw err;
     }
+
+    if (products === null) throw new Error("no Product");
+
+    return products;
 }
 
 async function getBefore(id) {
+    let BeforeProducts;
+
     try {
-        const BeforeProducts = await Product.findOne({
+        BeforeProducts = await Product.findOne({
             where: { id },
         });
-        const resultByOldProducts = JSON.stringify(BeforeProducts.dataValues);
-        return resultByOldProducts;
     } catch (err) {
-        if (
-            err.message ===
-            "'Cannot read properties of null (reading 'dataValues')'"
-        ) {
-            throw new Error("no Product");
-        }
         throw err;
     }
+
+    if (BeforeProducts === null) throw new Error("no Product");
+    BeforeProducts = JSON.stringify(BeforeProducts.dataValues);
+
+    return BeforeProducts;
 }
 
 async function getAfter(id) {
+    let AfterProducts;
+
     try {
-        const AfterProducts = await Product.findOne({
+        AfterProducts = await Product.findOne({
             where: { id },
         });
-        const resultByNewProducts = JSON.stringify(AfterProducts);
-        return resultByNewProducts;
     } catch (err) {
         throw err;
     }
+
+    AfterProducts =
+        AfterProducts === null
+            ? "removed"
+            : JSON.stringify(AfterProducts.dataValues);
+    return AfterProducts;
 }
 
 async function Create(package) {
+    const { id, name, price, origin, type } = package;
+    let createdProduct;
+
     try {
-        const { id, name, price, origin, type } = package;
-        const createdProduct = await Product.create({
+        createdProduct = await Product.create({
             id,
             name,
             price,
             origin,
             type,
         });
-        return createdProduct;
     } catch (err) {
         if (err.message === "Validation error") {
             throw new Error("same Product");
-        } else if (err.message || "notNull Violoation") {
+        } else if (
+            err.message === "notNull Violation: Product.type cannot be null"
+        ) {
             throw new Error("Form Null");
-        } else {
-            throw err;
-        }
+        } else throw err;
     }
+
+    return createdProduct;
 }
 
 async function Update(package, paramsId) {
@@ -100,11 +108,11 @@ async function Update(package, paramsId) {
     } catch (err) {
         if (err.message === "Validation error") {
             throw new Error("same Product");
-        } else if (err.message || "notNull Violoation") {
+        } else if (
+            err.message === "notNull Violation: Product.type cannot be null"
+        ) {
             throw new Error("Form Null");
-        } else {
-            throw err;
-        }
+        } else throw err;
     }
 }
 
@@ -113,7 +121,6 @@ async function Destroy(paramsId) {
         await Product.destroy({
             where: { id: paramsId },
         });
-        return 0;
     } catch (err) {
         throw err;
     }
