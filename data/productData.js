@@ -77,7 +77,12 @@ async function Create(package) {
         if (err.message === "Validation error") {
             throw new Error("same Product");
         } else if (
-            err.message === "notNull Violation: Product.type cannot be null"
+            err.message ||
+            ("notNull Violation: Product.id cannot be null" &&
+                "notNull Violation: Product.name cannot be null" &&
+                "notNull Violation: Product.price cannot be null" &&
+                "notNull Violation: Product.origin cannot be null" &&
+                "notNull Violation: Product.type cannot be null")
         ) {
             throw new Error("Form Null");
         } else throw err;
@@ -105,7 +110,12 @@ async function Update(package, paramsId) {
         if (err.message === "Validation error") {
             throw new Error("same Product");
         } else if (
-            err.message === "notNull Violation: Product.type cannot be null"
+            err.message ||
+            ("notNull Violation: Product.id cannot be null" &&
+                "notNull Violation: Product.name cannot be null" &&
+                "notNull Violation: Product.price cannot be null" &&
+                "notNull Violation: Product.origin cannot be null" &&
+                "notNull Violation: Product.type cannot be null")
         ) {
             throw new Error("Form Null");
         } else throw err;
