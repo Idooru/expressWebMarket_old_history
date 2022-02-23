@@ -4,13 +4,13 @@ const User = require("../models/users");
 
 const loginSet = () => {
     passport.serializeUser((user, done) => {
+        console.log(`${user.dataValues.nickname}님으로 로그인합니다.`);
         done(null, user.id);
     });
 
     passport.deserializeUser((id, done) => {
         User.findOne({ where: id })
             .then((user) => {
-                console.log(`${user}님으로 로그인합니다.`);
                 done(null, user);
             })
             .catch((err) => {
