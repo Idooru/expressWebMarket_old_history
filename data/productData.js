@@ -4,9 +4,7 @@ async function FindOne(id) {
     let product;
 
     try {
-        product = await Product.findOne({
-            where: { id },
-        });
+        product = await Product.findOne({ where: { id } });
     } catch (err) {
         throw err;
     }
@@ -34,9 +32,7 @@ async function getBefore(id) {
     let BeforeProducts;
 
     try {
-        BeforeProducts = await Product.findOne({
-            where: { id },
-        });
+        BeforeProducts = await Product.findOne({ where: { id } });
     } catch (err) {
         throw err;
     }

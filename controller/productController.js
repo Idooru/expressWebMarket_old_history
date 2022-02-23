@@ -27,16 +27,25 @@ async function getProductMain(req, res, next) {
         return next(err);
     }
 
-    const result = products.map((value, index) => {
+    const productNames = products.map((value, index) => {
         const productNames = [];
         productNames.push(products[index].name);
-        console.log(products[index].dataValues);
+
         return productNames;
     });
 
-    result.shift();
+    const productIds = products.map((value, index) => {
+        const productIds = [];
+        productIds.push(products[index].id);
 
-    res.locals.productNames = result;
+        return productIds;
+    });
+
+    productNames.shift();
+    productIds.shift();
+
+    res.locals.productNames = productNames;
+    res.locals.productIds = productIds;
     res.render("productMain");
 }
 
