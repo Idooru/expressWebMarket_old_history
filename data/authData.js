@@ -38,6 +38,7 @@ async function MakeHash(password) {
 
     return result;
 }
+
 async function MakeUser(exEmail, exNick, hash) {
     let user;
 
