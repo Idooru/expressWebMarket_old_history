@@ -1,16 +1,38 @@
 const dataWorker = require("../data/productData");
 
-async function getProductDetail(req, res, next) {
+async function getProductDetailById(req, res, next) {
     const paramsId = req.params.id;
+    const check = new Object();
+    check.id = paramsId;
     let product;
 
     try {
-        product = await dataWorker.FindOne(paramsId);
+        product = await dataWorker.FindOne(check);
     } catch (err) {
         return next(err);
     }
 
     res.locals.id = paramsId;
+    res.locals.productName = product.name;
+    res.locals.productPrice = product.price;
+    res.locals.productOrigin = product.origin;
+    res.locals.productType = product.type;
+    res.render("productInfo");
+}
+
+async function getProductDetailByName(req, res, next) {
+    const querryName = decodeURIComponent(req.query.name);
+    const check = new Object();
+    check.name = querryName;
+    let product;
+
+    try {
+        product = await dataWorker.FindOne(check);
+    } catch (err) {
+        return next(err);
+    }
+
+    res.locals.id = product.id;
     res.locals.productName = product.name;
     res.locals.productPrice = product.price;
     res.locals.productOrigin = product.origin;
@@ -31,14 +53,14 @@ async function getProductMain(req, res, next) {
         const productNames = [];
         productNames.push(products[index].name);
 
-        return productNames;
+        return productNames[0];
     });
 
     const productIds = products.map((value, index) => {
         const productIds = [];
         productIds.push(products[index].id);
 
-        return productIds;
+        return productIds[0];
     });
 
     productNames.shift();
@@ -108,7 +130,8 @@ async function removeProduct(req, res, next) {
 }
 
 module.exports = {
-    getProductDetail,
+    getProductDetailById,
+    getProductDetailByName,
     getProductMain,
     createProduct,
     modifyProduct,

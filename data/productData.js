@@ -1,10 +1,17 @@
 const Product = require("../models/products");
 
-async function FindOne(id) {
+async function FindOne(check) {
     let product;
+    let checker;
 
     try {
-        product = await Product.findOne({ where: { id } });
+        if (check.id) {
+            checker = check.id;
+            product = await Product.findOne({ where: { id: checker } });
+        } else {
+            checker = check.name;
+            product = await Product.findOne({ where: { name: checker } });
+        }
     } catch (err) {
         throw err;
     }

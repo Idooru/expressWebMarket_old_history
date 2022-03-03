@@ -4,11 +4,12 @@ const router = express.Router();
 
 router
     .route("/")
+    .get(controllWorker.getProductDetailByName)
     .get(controllWorker.getProductMain)
     .post(controllWorker.createProduct);
 router
     .route("/:id")
-    .get(controllWorker.getProductDetail)
+    .get(controllWorker.getProductDetailById)
     .patch(controllWorker.modifyProduct)
     .delete(controllWorker.removeProduct);
 
